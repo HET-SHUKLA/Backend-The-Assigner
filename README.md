@@ -1,10 +1,13 @@
 # Backend-The-Assigner
 
 POST message
-![POST message](image-1.png)
+![POST message](https://github.com/user-attachments/assets/8cf9fb05-81d2-454e-8466-6dae435143f7)
+
 
 Get all Data
-![All data](image-2.png)
+![All data](https://github.com/user-attachments/assets/65e5888c-eeb4-413b-aebc-2914c79ca687)
+
 
 Get data from email
-![Data from email](image-3.png)
+![Data from email](https://github.com/user-attachments/assets/d4a980b2-31bc-408b-8103-45b41b8466ed)
+
