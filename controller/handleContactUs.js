@@ -33,6 +33,29 @@ const handleContactUs = async (req, res) => {
     }
 }
 
+const handleAllMessages = async (req, res) => {
+    try{
+        const data = await Contact.find({});
+        res.status(200).json({msg: 'success', data: data});
+    }catch(e){
+        res.status(500).json({msg: `Data fetching error : ${e}`});
+    }
+}
+
+const handleMailMessage = async (req, res) => {
+    const {mail} = req.params;
+    try{
+        const query = {email: mail};
+
+        const data = await Contact.find(query);
+        res.status(200).json({msg: 'success', data: data});
+    }catch(e){
+        res.status(500).json({msg: `Data fetching error : ${e}`});
+    }
+}
+
 export {
     handleContactUs,
+    handleAllMessages,
+    handleMailMessage,
 }
