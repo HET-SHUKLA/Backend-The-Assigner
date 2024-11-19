@@ -2,12 +2,15 @@ import express from 'express';
 import connectDB from './connection.js';
 import {MONGO_URL, PORT} from './config.js';
 import contactRoute from './routes/contactRoute.js';
+import userRoute from './routes/user.route.js';
+import {upload} from './utils/imageUpload.js';
 
 const app = express();
 
 app.use(express.urlencoded({extended: false}));
 
 app.use('/api/v1/contact', contactRoute);
+app.use('/api/v1/user', upload.single('profilePic'), userRoute);
 
 connectDB(MONGO_URL).then( () => {
     console.log('Mongo DB Connected');

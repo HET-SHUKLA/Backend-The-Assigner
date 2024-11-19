@@ -6,7 +6,8 @@ const phonePatt = new RegExp('^[0-9]{10}$');
 const handleContactUs = async (req, res) => {
     try{
         const {name, email, phoneNo, message, address, subject} = req.body;
-
+        console.log(req.body);
+        
         if(!validator.isEmail(email)){
             return res.status(400).json({msg: 'Email is not valid'});
         }
