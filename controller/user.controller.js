@@ -32,12 +32,37 @@ const handleAddUser = async (req, res) => {
         const doc = new User(userSchema);
         const result = await doc.save();
 
-        res.status(200).json({msg: 'success', data: result});
+        return res.status(200).json({msg: 'success', data: result});
     } catch (e) {
-        res.status(500).json({msg: `Data Insertion error ${e}`});
+        return res.status(500).json({msg: `Data Insertion error ${e}`});
     }
-};
+}
+
+const handleGetUser = async (req, res) => {
+    try{
+        const result = await User.find({});
+        return res.status(200).json({msg:'success', data: result})
+    }catch(e){
+        return res.status(500).json({msg:`Data fetching error : ${e}`})
+    }
+}
+
+const handleGetIndividualUser = async (req, res) => {
+
+    try{
+        const {attr, id} = req.params;
+
+        const query = {[attr]: id};        
+        const result = await User.find(query);
+
+        return res.status(200).json({msg: 'success', data: result});
+    }catch(e){
+        return res.status(500).json({msg:`Data fetching error : ${e}`})        
+    }
+}
 
 export {
     handleAddUser,
+    handleGetUser,
+    handleGetIndividualUser
 };

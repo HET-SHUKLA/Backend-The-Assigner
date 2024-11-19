@@ -1,6 +1,8 @@
 import { Router } from "express";
 import {
     handleAddUser,
+    handleGetUser,
+    handleGetIndividualUser
 } from '../controller/user.controller.js';
 
 const routes = Router();
@@ -10,7 +12,9 @@ const routes = Router();
 routes.post('/add', handleAddUser);
 
 //For admin
-//routes.get('/', handleGetUser);
+routes.get('/all', handleGetUser);
+//Get user from email, phone or any other attribute from schema
+routes.get('/:attr/:id', handleGetIndividualUser);
 
 
 export default routes;
