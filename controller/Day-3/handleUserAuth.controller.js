@@ -48,15 +48,20 @@ const generateOtp = () => {
     return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
-const handleOtp = (req, res) => {
+const handleOtp = async (req, res) => {
     try{
         if(!req.cookies.email){
-            return res.redirect('api/v1/register');
+            return res.status(400).json({msg: 'Can not found email ID, register or login first'});
         }
-        console.log('Hello',req.cookies.email);
         
         const otp = generateOtp();
         const otpExpiry = new Date(Date.now() + 5 * 60 * 1000);
+
+
+        const data = await Otp.findOne({email: req.cookies.email});
+        if(data){
+            await Otp.deleteOne({email: req.cookies.email});
+        }
 
         const otpSchema = {
             otp: otp,
@@ -65,7 +70,7 @@ const handleOtp = (req, res) => {
         }
 
         const doc = new Otp(otpSchema);
-        const result = doc.save();
+        const result = await doc.save();
 
         main(req.cookies.email, otp);
 
@@ -79,7 +84,7 @@ const handleOtp = (req, res) => {
 const handleVerifyOtp = async (req, res) => {
     try{
         if(!req.cookies.email){
-            res.redirect('api/v1/day3/register');
+            return res.status(400).json({msg: 'Can not found email ID, register or login first'});
         }
         const {otp} = req.params;
 
@@ -113,8 +118,46 @@ const handleVerifyOtp = async (req, res) => {
     }
 }
 
+const handleLogin = async (req, res) => {
+    try{
+        const {email, password} = req.body;
+
+        const data = await D3User.findOne({email});
+        
+        if(data){
+            
+            bcrypt.compare(password, data.password, async function(err, result) {
+                if(err){
+                    return;
+                }
+    
+                if(result){
+                    if(data.verify){
+                        return res.status(200).json({msg: 'User is verified and logged in'});
+                    }
+
+                    res.cookie('email', email, {
+                        httpOnly: true, 
+                        secure: true,
+                        maxAge: 600000, // 10min
+                    });
+
+                    return res.redirect('/api/v1/day3/otp');
+                }
+                return res.status(401).json({msg: 'Password is wrong'})
+            });
+        }else{
+            return res.status(404).json({msg: 'User does not exists, Register first'});
+        }
+    }catch(e){
+        return res.status(500).json({msg: `Somehing went wrong : ${e}`});
+    }
+}
+
+
 export {
     handleEmailVerification,
     handleOtp,
     handleVerifyOtp,
+    handleLogin,
 }
