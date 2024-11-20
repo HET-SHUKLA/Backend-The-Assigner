@@ -1,4 +1,4 @@
-import {User} from '../models/user.model.js';
+import {User} from '../../models/Day-2/user.model.js';
 
 const handleAddUser = async (req, res) => {
     try {

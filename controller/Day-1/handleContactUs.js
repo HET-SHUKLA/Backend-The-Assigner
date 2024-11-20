@@ -1,4 +1,4 @@
-import {Contact} from '../models/contact.model.js';
+import {Contact} from '../../models/Day-1/contact.model.js';
 import validator from 'validator';
 
 const phonePatt = new RegExp('^[0-9]{10}$');
