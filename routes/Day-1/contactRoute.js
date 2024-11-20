@@ -3,7 +3,7 @@ import {
     handleContactUs, 
     handleAllMessages,
     handleMailMessage
-} from '../controller/handleContactUs.js';
+} from '../../controller/Day-1/handleContactUs.js';
 
 const route = Router();
 

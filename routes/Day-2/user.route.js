@@ -3,7 +3,7 @@ import {
     handleAddUser,
     handleGetUser,
     handleGetIndividualUser
-} from '../controller/user.controller.js';
+} from '../../controller/Day-2/user.controller.js';
 
 const routes = Router();
 
